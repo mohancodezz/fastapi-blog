@@ -6,14 +6,12 @@ from core.hashing import Hasher
 
 
 def create_new_user(user:CreateUser, db:Session):
-    user = User(
+    new_user = User(
+            username = user.username,
             email = user.email,
             password = Hasher.get_password_hash(user.password),
-            is_active = False,
-            is_superuser = False,
-            is_verified = False,
             )
-    db.add(user)
+    db.add(new_user)
     db.commit()
-    db.refresh(user)
-    return user
+    db.refresh(new_user)
+    return new_user
